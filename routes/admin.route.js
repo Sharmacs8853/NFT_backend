@@ -30,7 +30,7 @@ adminController.post("/signup", async (req, res) => {
 
 // ============login api for admin ================== 
 adminController.post("/login", async (req, res) => {
-    const { email, password } = req.bod
+    const { email, password } = req.body
     const admin = await adminModel.findOne({ email })
 
     if (admin) {
