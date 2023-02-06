@@ -1,6 +1,16 @@
 const { Router } = require('express');
 const { contactModel } = require('../model/contact.model');
 const contactController = Router();
+const nodemailer = require("nodemailer")
+
+const transport = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    auth: {
+        user:  "sharmacs8853@gmail.com",
+        pass:   "Jitushiv@143",
+    }
+ });
 
 //==========Post API for contact=============== 
 contactController.post("/post", async (req, res) => {
@@ -14,6 +24,7 @@ contactController.post("/post", async (req, res) => {
     });
 
     await new_contact.save();
+    sendMail(email, name)
     res.send({ "msg": "thank you for contact" })
 })
 
@@ -35,6 +46,24 @@ contactController.delete('/:id', async (req, res)=>{
     console.log(error);
    }
 })
+
+const sendMail  = (email, name)=>{
+    transport.sendMail({
+       to:  email,
+       from: "apnetv@apnetv.com",
+       subject: "Welcome",
+       text: `Hello ${name},
+               
+               Welcome !!!
+               You Succesfully register 
+               thank from jitendra sharma
+                
+       
+       `
+   }).catch((e)=>{
+    console.log(e.message, "error")
+   })   
+ }
 
 module.exports = {
     contactController

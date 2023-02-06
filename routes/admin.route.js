@@ -56,6 +56,17 @@ adminController.get("/users", async (req, res) => {
     const users = await adminModel.find(query)
     res.send(users)
 })
+
+adminController.delete('/:id', async (req, res)=>{
+    const id = req.params.id;
+    console.log(id);
+    try {
+     await adminModel.deleteOne({_id:id})
+     res.send({"msg":"contact deleted successfully"})
+    } catch (error) {
+     console.log(error);
+    }
+ })
 module.exports = {
     adminController
 }
