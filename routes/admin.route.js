@@ -57,6 +57,7 @@ adminController.get("/users", async (req, res) => {
     res.send(users)
 })
 
+//========delete route for users or admins ========
 adminController.delete('/:id', async (req, res)=>{
     const id = req.params.id;
     console.log(id);
@@ -67,6 +68,34 @@ adminController.delete('/:id', async (req, res)=>{
      console.log(error);
     }
  })
+
+// =========update route for admin ===========
+adminController.patch("/:id", async (req, res)=>{
+    const id = req.params.id;
+  //  console.log(id);
+    try {
+        const updatedAdmin = await adminModel.findByIdAndUpdate(id, req.body, {
+            new: true
+        })
+        res.status(200).send(updatedAdmin);
+    } catch (error) {
+        res.status(404).send({"msg":"admin can't be updated something went wrong"})
+    }
+})
+
+// ===========get admin by id ============
+
+adminController.get("/:id", async (req, res)=>{
+    const id = req.params.id;
+    console.log('id', id);
+    try {
+        const admin = await adminModel.find({_id: id})
+        res.status(200).send(admin);
+    } catch (error) {
+        res.status(404).send({"msg":"not getting the data by id"})
+    }
+
+})
 module.exports = {
     adminController
 }

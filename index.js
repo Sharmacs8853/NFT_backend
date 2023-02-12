@@ -17,7 +17,6 @@ app.get("/", (req, res)=>{
 })
 
 app.use("/admin", adminController);
-
 app.use("/contact", contactController);
 app.use("/tagline", taglineController )
 app.use("/progress", progressController);
